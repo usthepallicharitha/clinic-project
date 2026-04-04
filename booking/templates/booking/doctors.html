@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Doctors</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #2b1d17, #5c4033);
+    color: #fff5e6;
+}
+
+/* Navbar */
+.navbar {
+    background: #5c4033;
+    padding: 15px;
+}
+
+.navbar a {
+    color: #ffbf00;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Container */
+.container {
+    padding: 20px;
+}
+
+/* Title */
+h2 {
+    color: #ffbf00;
+    text-align: center;
+}
+
+/* 🔍 FILTER BOX */
+.filter-box {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.filter-box input,
+.filter-box select {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    border: none;
+    width: 200px;
+}
+
+/* Button */
+.filter-box button {
+    padding: 10px 15px;
+    border: none;
+    background: linear-gradient(45deg, #cd7f32, #ffbf00);
+    color: #2b1d17;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filter-box button:hover {
+    transform: scale(1.05);
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* 🌟 CARD */
+.card {
+    background: linear-gradient(145deg, #fffaf0, #ffe4b5);
+    color: #2b1d17;
+    padding: 22px;
+    border-radius: 18px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.2),
+        inset 0 0 10px rgba(255,191,0,0.15);
+
+    transition: all 0.4s ease;
+}
+
+/* Top glow */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #cd7f32, #ffbf00, #cd7f32);
+    transition: 0.6s;
+}
+
+.card:hover::before {
+    left: 0;
+}
+
+/* Shine */
+.card::after {
+    content: "";
+    position: absolute;
+    top: -120%;
+    left: -50%;
+    width: 200%;
+    height: 300%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(25deg);
+    transition: 0.6s;
+}
+
+.card:hover::after {
+    top: 120%;
+}
+
+/* Hover */
+.card:hover {
+    transform: translateY(-12px) scale(1.04);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.35),
+        0 0 20px rgba(255,191,0,0.3);
+}
+
+/* Text */
+.card h3 {
+    color: #8b4513;
+}
+
+.card p {
+    margin: 6px 0;
+}
+
+/* Button */
+.btn {
+    background: linear-gradient(45deg, #cd7f32, #ffbf00);
+    color: #2b1d17;
+    padding: 10px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+/* Ripple */
+.btn::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+}
+
+.btn:active::after {
+    width: 200px;
+    height: 200px;
+}
+
+/* Hover */
+.btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255,191,0,0.5);
+}
+
+/* No data */
+.no-data {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/doctors/">Doctors</a>
+    <a href="/book/">Book</a>
+    <a href="/appointments/">Appointments</a>
+</div>
+
+<div class="container">
+
+<h2>Our Doctors</h2>
+
+<!-- 🔍 SEARCH + FILTER -->
+<div class="filter-box">
+    <form method="GET">
+        <input type="text" name="search" placeholder="Search doctor..." />
+
+        <select name="specialization">
+            <option value="">All Specializations</option>
+            <option value="Cardiologist">Cardiologist</option>
+            <option value="gynecologist">Gynecologist</option>
+            <option value="oncologist">Oncologist</option>
+            <option value="Dermotologist">Dermotologist</option>
+            <option value="Neurosurgeon">Neurosurgeon</option>
+        </select>
+
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<!-- 👨‍⚕️ DOCTORS GRID -->
+<div class="grid">
+
+{% for d in data %}
+<div class="card">
+
+    <h3>👨‍⚕️ {{ d.name }}</h3>
+
+    <p><b>🩺 Specialization:</b> {{ d.specialization }}</p>
+    <p>📅 {{ d.available_days }}</p>
+    <p>⏰ {{ d.available_time }}</p>
+
+    <a href="/book/?doctor={{ d.id }}" class="btn">Book Appointment</a>
+
+</div>
+{% endfor %}
+
+</div>
+
+<!-- ❌ No data -->
+{% if not data %}
+<p class="no-data">No doctors found</p>
+{% endif %}
+
+</div>
+
+</body>
+</html>

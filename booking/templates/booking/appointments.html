@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Appointments Dashboard</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #2b1d17, #5c4033);
+    color: #fff5e6;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+}
+
+.navbar a {
+    color: #ffbf00;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Title */
+h2 {
+    padding: 20px;
+    color: #ffbf00;
+}
+
+/* Grid */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glow border FIXED */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg, #ffbf00, #cd7f32);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+
+    pointer-events: none;  /* ✅ IMPORTANT FIX */
+}
+
+/* Hover */
+.card:hover {
+    transform: translateY(-10px) scale(1.03);
+}
+
+/* Text */
+.card p {
+    margin: 8px 0;
+}
+
+/* Status */
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.booked { background: #ffbf00; color: #2b1d17; }
+.approved { background: #2ecc71; }
+.rejected { background: #e74c3c; }
+
+/* Buttons */
+.btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-right: 5px;
+    font-size: 13px;
+    transition: 0.3s;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Colors */
+.approve { background: #2ecc71; color: white; }
+.reject { background: #e74c3c; color: white; }
+.delete { background: #cd7f32; color: white; }
+
+/* Hover */
+.btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    color: #ccc;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/doctors/">Doctors</a>
+    <a href="/book/">Book</a>
+    <a href="/appointments/">Appointments</a>
+</div>
+
+<h2>📅 Appointments Dashboard</h2>
+
+<div class="container">
+
+{% for a in data %}
+<div class="card">
+
+    <p><b>👤 Patient:</b> {{ a.patient_name }}</p>
+    <p><b>📞 Phone:</b> {{ a.phone }}</p>
+    <p><b>📧 Email:</b> {{ a.email }}</p>
+    <p><b>👨‍⚕️ Doctor:</b> {{ a.doctor.name }}</p>
+    <p><b>📅 Date:</b> {{ a.date }}</p>
+    <p><b>⏰ Time:</b> {{ a.time }}</p>
+
+    <!-- Status -->
+    <p>
+        <b>Status:</b>
+        <span class="status 
+            {% if a.status == 'Approved' %}approved
+            {% elif a.status == 'Rejected' %}rejected
+            {% else %}booked
+            {% endif %}">
+            {{ a.status }}
+        </span>
+    </p>
+
+    <!-- Buttons -->
+    <div style="margin-top:10px;">
+        <a href="/approve/{{ a.id }}/" class="btn approve">✔ Approve</a>
+        <a href="/reject/{{ a.id }}/" class="btn reject">✖ Reject</a>
+        <a href="/delete/{{ a.id }}/" class="btn delete"
+           onclick="return confirm('Delete this appointment?')">🗑 Delete</a>
+    </div>
+
+</div>
+{% endfor %}
+
+</div>
+
+<div class="footer">
+    © 2026 Clinic System
+</div>
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Clinic System</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Loader */
+#loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #2b1d17;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ffbf00;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Navbar */
+.navbar {
+    background: #5c4033;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar a {
+    color: #ffbf00;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+}
+
+.navbar a.active {
+    color: white;
+}
+
+/* underline */
+.navbar a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #ffbf00;
+    left: 0;
+    bottom: -5px;
+    transition: 0.3s;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+/* Hero */
+.hero {
+    height: 90vh;
+    background: linear-gradient(rgba(43,29,23,0.8), rgba(92,64,51,0.8)),
+    url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding-top: 120px;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 45px;
+    animation: fadeDown 1s ease;
+}
+
+.hero p {
+    animation: fadeUp 1s ease;
+}
+
+/* Button */
+.btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(45deg, #cd7f32, #ffbf00);
+    color: #2b1d17;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(255,191,0,0.5);
+}
+
+/* Features */
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px;
+    background: #fff5e6;
+}
+
+.feature {
+    text-align: center;
+    width: 25%;
+    transition: 0.4s;
+}
+
+.feature:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 25px rgba(255,191,0,0.3);
+}
+
+/* Doctors */
+.doctors {
+    padding: 50px;
+    text-align: center;
+    background: #f8f6f3;
+}
+
+.doctor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Card */
+.card {
+    background: linear-gradient(145deg, #fffaf0, #ffe4b5);
+    padding: 20px;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #cd7f32, #ffbf00);
+    transition: 0.5s;
+}
+
+.card:hover::before {
+    left: 0;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    top: -120%;
+    left: -50%;
+    width: 200%;
+    height: 300%;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(25deg);
+    transition: 0.6s;
+}
+
+.card:hover::after {
+    top: 120%;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    background: #5c4033;
+    color: #ffbf00;
+    padding: 40px;
+}
+
+/* Reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.6s;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Footer */
+.footer {
+    background: #2b1d17;
+    color: #ccc;
+    text-align: center;
+    padding: 15px;
+}
+
+/* Animations */
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- Loader -->
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="/" class="active">Home</a>
+    <a href="/doctors/">Doctors</a>
+    <a href="/book/">Book</a>
+    <a href="/appointments/">Appointments</a>
+    <a href="/admin-login/">Admin</a>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+    <h1>Clinic Appointment System</h1>
+    <p>Book your doctor appointments easily and quickly</p>
+    <a href="/book/" class="btn">Book Appointment</a>
+</div>
+
+<!-- Features -->
+<div class="features reveal">
+    <div class="feature">
+        <h3>⚡ Easy Booking</h3>
+        <p>Book in seconds</p>
+    </div>
+
+    <div class="feature">
+        <h3>👨‍⚕️ Expert Doctors</h3>
+        <p>Best specialists</p>
+    </div>
+
+    <div class="feature">
+        <h3>🔒 Secure Data</h3>
+        <p>Safe and protected</p>
+    </div>
+</div>
+
+<!-- Doctors -->
+<div class="doctors reveal">
+    <h2>Our Doctors</h2>
+
+    <div class="doctor-grid">
+    {% for d in doctors %}
+    <div class="card">
+        <h4>{{ d.name }}</h4>
+        <p>{{ d.specialization }}</p>
+        <a href="/book/?doctor={{ d.id }}" class="btn">Book</a>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+
+<!-- Stats -->
+<div class="stats reveal">
+    <div>
+        <h2>50+</h2>
+        <p>Doctors</p>
+    </div>
+    <div>
+        <h2>500+</h2>
+        <p>Appointments</p>
+    </div>
+    <div>
+        <h2>100%</h2>
+        <p>Satisfaction</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    © 2026 Clinic System | Designed for Excellence
+</div>
+
+<!-- JS -->
+<script>
+/* Loader */
+window.onload = function() {
+    document.getElementById("loader").style.display = "none";
+};
+
+/* Scroll Reveal */
+window.addEventListener('scroll', function() {
+    document.querySelectorAll('.reveal').forEach(r => {
+        if (r.getBoundingClientRect().top < window.innerHeight - 50) {
+            r.classList.add('active');
+        }
+    });
+});
+
+/* Parallax */
+window.addEventListener('scroll', function() {
+    let scroll = window.scrollY;
+    document.querySelector('.hero').style.backgroundPositionY = scroll * 0.5 + "px";
+});
+</script>
+
+</body>
+</html>

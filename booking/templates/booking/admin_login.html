@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Login</title>
+
+<style>
+
+/* ✅ Fix overflow globally */
+* {
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fffaf5, #f3e0c7);
+}
+
+/* Card */
+.card {
+    width: 90%;
+    max-width: 420px;
+    padding: 30px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    text-align: center;
+    border: 2px solid #ffbf00;
+}
+
+/* Title */
+h2 {
+    color: #5c4033;
+    margin-bottom: 25px;
+}
+
+/* Input group */
+.input-group {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+/* Input */
+input {
+    width: 100%;
+    padding: 14px 45px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+/* Focus effect */
+input:focus {
+    border-color: #ffbf00;
+    box-shadow: 0 0 8px rgba(255,191,0,0.3);
+}
+
+/* Icons */
+.icon {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+}
+
+/* Eye toggle */
+.toggle {
+    position: absolute;
+    top: 14px;
+    right: 12px;
+    cursor: pointer;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(45deg, #cd7f32, #ffbf00);
+    color: #2b1d17;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Button hover */
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255,191,0,0.4);
+}
+
+/* Error */
+.error {
+    color: red;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #777;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>🔐 Admin Login</h2>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <span class="icon">👤</span>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+
+        <div class="input-group">
+            <span class="icon">🔒</span>
+            <input type="password" id="pass" name="password" placeholder="Password" required>
+            <span class="toggle" onclick="togglePass()">👁</span>
+        </div>
+
+        <button type="submit">🚀 Login</button>
+    </form>
+
+    <div class="footer">© 2026 Clinic System</div>
+
+</div>
+
+<script>
+function togglePass(){
+    var x = document.getElementById("pass");
+    x.type = x.type === "password" ? "text" : "password";
+}
+</script>
+
+</body>
+</html>
