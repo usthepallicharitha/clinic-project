@@ -27,6 +27,7 @@ A full-stack web application built using Django that allows patients to book doc
 ## 🙋‍♀️ Author
 
 👩‍💻 Charitha
+
 Built with passion ❤️
 
 
