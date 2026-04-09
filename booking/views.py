@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Doctor, Appointment
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
 
@@ -61,7 +62,7 @@ def book(request):
     return render(request, 'booking/booking.html', {'doctors': doctors})
 
 
-# 📊 APPOINTMENTS PAGE
+@login_required
 def appointments(request):
     data = Appointment.objects.all()
     return render(request, 'booking/appointments.html', {'data': data})

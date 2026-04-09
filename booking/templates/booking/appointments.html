@@ -59,8 +59,13 @@ h2 {
     border-radius: 20px;
     padding: 2px;
     background: linear-gradient(45deg, #ffbf00, #cd7f32);
+    /* WebKit (Chrome, Safari) */
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
+
+    /* Standard (Firefox, modern browsers) */
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
 
     pointer-events: none;  /* ✅ IMPORTANT FIX */
 }
@@ -128,7 +133,7 @@ h2 {
     <a href="/">Home</a>
     <a href="/doctors/">Doctors</a>
     <a href="/book/">Book</a>
-    <a href="/appointments/">Appointments</a>
+    <!-- <a href="/appointments/">Appointments</a> -->
 </div>
 
 <h2>📅 Appointments Dashboard</h2>
